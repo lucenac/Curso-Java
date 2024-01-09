@@ -1,53 +1,59 @@
 package application;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Program {
-    public static void main(String[] args) throws ParseException {
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        sdf3.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-        Date x1 = new Date();
-        Date x2 = new Date(System.currentTimeMillis());
-        Date x3 = new Date(0L);
-        Date x4 = new Date(1000L * 60L * 60L * 5L);
+    public static void main(String[] args) {
+        // Obtendo a data atual
+        LocalDate dataAtual = LocalDate.now();
 
-        Date y1 = sdf1.parse("25/06/2018");
-        Date y2 = sdf2.parse("25/06/2018 15:42:07");
-        Date y3 = Date.from(Instant.parse("2018-06-25T15:42:07Z"));
+        // Obtendo a hora atual
+        LocalTime horaAtual = LocalTime.now();
 
-        System.out.println("x1: " + x1);
-        System.out.println("x2: " + x2);
-        System.out.println("x3: " + x3);
-        System.out.println("x4: " + x4);
-        System.out.println("y1: " + y1);
-        System.out.println("y2: " + y2);
-        System.out.println("y3: " + y3);
+        // Obtendo a data e hora atuais
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
 
-        System.out.println("-------------");
+        // Exibindo a data atual
+        System.out.println("Data atual: " + dataAtual);
 
-        System.out.println("x1: " + sdf2.format(x1));
-        System.out.println("x2: " + sdf2.format(x2));
-        System.out.println("x3: " + sdf2.format(x3));
-        System.out.println("x4: " + sdf2.format(x4));
-        System.out.println("y1: " + sdf2.format(y1));
-        System.out.println("y2: " + sdf2.format(y2));
-        System.out.println("y3: " + sdf2.format(y3));
+        // Exibindo a hora atual
+        System.out.println("Hora atual: " + horaAtual);
 
-        System.out.println("-------------");
+        // Exibindo a data e hora atuais
+        System.out.println("Data e hora atuais: " + dataHoraAtual);
 
-        System.out.println("x1: " + sdf3.format(x1));
-        System.out.println("x2: " + sdf3.format(x2));
-        System.out.println("x3: " + sdf3.format(x3));
-        System.out.println("x4: " + sdf3.format(x4));
-        System.out.println("y1: " + sdf3.format(y1));
-        System.out.println("y2: " + sdf3.format(y2));
-        System.out.println("y3: " + sdf3.format(y3));
+        // Formatando a data e hora atual usando um formato específico
+        DateTimeFormatter formatoPersonalizado = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dataHoraFormatada = dataHoraAtual.format(formatoPersonalizado);
+        System.out.println("Data e hora formatadas: " + dataHoraFormatada);
+
+        // Adicionando/subtraindo dias à data atual
+        LocalDate dataDaquiUmaSemana = dataAtual.plus(1, ChronoUnit.WEEKS);
+        LocalDate dataHaTresMeses = dataAtual.minus(3, ChronoUnit.MONTHS);
+        System.out.println("Data daqui a uma semana: " + dataDaquiUmaSemana);
+        System.out.println("Data há três meses: " + dataHaTresMeses);
+
+        // Adicionando/subtraindo horas à hora atual
+        LocalTime horaDaquiUmaHora = horaAtual.plusHours(1);
+        LocalTime horaHaTresHoras = horaAtual.minusHours(3);
+        System.out.println("Hora daqui a uma hora: " + horaDaquiUmaHora);
+        System.out.println("Hora há três horas: " + horaHaTresHoras);
+
+        // Calculando diferença entre duas datas
+        LocalDate outraData = LocalDate.of(2023, 12, 25);
+        long diferencaDias = ChronoUnit.DAYS.between(dataAtual, outraData);
+        System.out.println("Diferença de dias entre hoje e 25/12/2023: " + diferencaDias + " dias");
+
+        // Extração de componentes da data atual
+        int diaDoMes = dataAtual.getDayOfMonth();
+        int mes = dataAtual.getMonthValue();
+        int ano = dataAtual.getYear();
+        System.out.println("Dia do mês: " + diaDoMes);
+        System.out.println("Mês: " + mes);
+        System.out.println("Ano: " + ano);
     }
 }
